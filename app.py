@@ -12,7 +12,6 @@ app.config['SECRET_KEY'] = 'febghbn23u48934jfi3j4dj394u345r23'
 mongo = PyMongo(app)
 users_collection = mongo.db.users
 todos_collection = mongo.db.todos
-chats_collection = mongo.db.chats
 
 # check connection mongoDB
 @app.route('/check')
@@ -75,20 +74,6 @@ def get_todos(current_user):
     todos = todos_collection.find({'user_id': current_user['_id']})
     output = [{'title': todo['title'], 'description': todo['description']} for todo in todos]
     return jsonify({'todos': output})
-
-@app.route('/chat', methods=['POST'])
-@token_required
-def create_chat(current_user):
-    data = request.get_json()
-    chats_collection.insert_one({'user_id': current_user['_id'], 'username': current_user['username'], 'message': data['message']})
-    return jsonify({'message': 'Message sent!'}), 201
-
-@app.route('/chat', methods=['GET'])
-@token_required
-def get_chats(current_user):
-    chats = chats_collection.find()
-    output = [{'username': chat['username'], 'message': chat['message']} for chat in chats]
-    return jsonify({'chats': output})
 
 @app.route('/dashboard')
 @token_required

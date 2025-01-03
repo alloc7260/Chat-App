@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat App</title>
+    <title>App</title>
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <div class="container">
-      <h1>Chat App</h1>
+      <h1>App</h1>
       <div id="auth">
         <h2>Register</h2>
         <input type="text" id="register-username" placeholder="Username" />
@@ -19,12 +19,13 @@
         <input type="password" id="login-password" placeholder="Password" />
         <button onclick="login()">Login</button>
       </div>
-      <div id="chat" style="display: none">
-        <div id="chat-window">
-          <ul id="chat-list"></ul>
-        </div>
-        <input type="text" id="chat-message" placeholder="Type a message..." />
-        <button onclick="sendMessage()">Send</button>
+      <div id="todo" style="display: none">
+        <h2>Create To-Do</h2>
+        <input type="text" id="todo-title" placeholder="Title" />
+        <input type="text" id="todo-description" placeholder="Description" />
+        <button onclick="createTodo()">Create</button>
+        <h2>Your To-Dos</h2>
+        <ul id="todo-list"></ul>
         <button onclick="logout()">Logout</button>
       </div>
     </div>
@@ -67,26 +68,27 @@
           });
       }
 
-      function sendMessage() {
-        const message = document.getElementById("chat-message").value;
+      function createTodo() {
+        const title = document.getElementById("todo-title").value;
+        const description = document.getElementById("todo-description").value;
 
-        fetch("/chat", {
+        fetch("/todo", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "x-access-tokens": token,
           },
-          body: JSON.stringify({ message }),
+          body: JSON.stringify({ title, description }),
         })
           .then((response) => response.json())
           .then((data) => {
             alert(data.message);
-            getMessages();
+            getTodos();
           });
       }
 
-      function getMessages() {
-        fetch("/chat", {
+      function getTodos() {
+        fetch("/todo", {
           method: "GET",
           headers: {
             "x-access-tokens": token,
@@ -94,12 +96,12 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            const chatList = document.getElementById("chat-list");
-            chatList.innerHTML = "";
-            data.chats.forEach((chat) => {
+            const todoList = document.getElementById("todo-list");
+            todoList.innerHTML = "";
+            data.todos.forEach((todo) => {
               const li = document.createElement("li");
-              li.textContent = `${chat.username}: ${chat.message}`;
-              chatList.appendChild(li);
+              li.textContent = `${todo.title}: ${todo.description}`;
+              todoList.appendChild(li);
             });
           });
       }
@@ -116,7 +118,7 @@
       }
 
       document.addEventListener("DOMContentLoaded", function() {
-        fetch("/chat", {
+        fetch("/todo", {
           method: "GET",
           headers: {
             "x-access-tokens": token,
@@ -125,19 +127,19 @@
           .then((response) => {
             if (response.status === 200) {
               document.getElementById("auth").style.display = "none";
-              document.getElementById("chat").style.display = "block";
+              document.getElementById("todo").style.display = "block";
               return response.json();
             } else {
               throw new Error('Not authenticated');
             }
           })
           .then((data) => {
-            const chatList = document.getElementById("chat-list");
-            chatList.innerHTML = "";
-            data.chats.forEach((chat) => {
+            const todoList = document.getElementById("todo-list");
+            todoList.innerHTML = "";
+            data.todos.forEach((todo) => {
               const li = document.createElement("li");
-              li.textContent = `${chat.username}: ${chat.message}`;
-              chatList.appendChild(li);
+              li.textContent = `${todo.title}: ${todo.description}`;
+              todoList.appendChild(li);
             });
           })
           .catch((error) => {
