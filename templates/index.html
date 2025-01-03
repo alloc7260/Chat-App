@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>App</title>
+    <title>Chat App</title>
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <div class="container">
-      <h1>App</h1>
+      <h1>Chat App</h1>
       <div id="auth">
         <h2>Register</h2>
         <input type="text" id="register-username" placeholder="Username" />
@@ -19,13 +19,13 @@
         <input type="password" id="login-password" placeholder="Password" />
         <button onclick="login()">Login</button>
       </div>
-      <div id="todo" style="display: none">
-        <h2>Create To-Do</h2>
-        <input type="text" id="todo-title" placeholder="Title" />
-        <input type="text" id="todo-description" placeholder="Description" />
-        <button onclick="createTodo()">Create</button>
-        <h2>Your To-Dos</h2>
-        <ul id="todo-list"></ul>
+      <div id="chat" style="display: none">
+        <div id="chat-window">
+          <ul id="chat-list"></ul>
+        </div>
+        <input type="text" id="chat-message" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="logout()">Logout</button>
       </div>
     </div>
     <script>
@@ -59,38 +59,34 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            if (data.token) {
-              token = data.token;
-              document.getElementById("auth").style.display = "none";
-              document.getElementById("todo").style.display = "block";
-              getTodos();
+            if (data.message === 'Login successful!') {
+              window.location.href = '/dashboard';
             } else {
               alert(data.message);
             }
           });
       }
 
-      function createTodo() {
-        const title = document.getElementById("todo-title").value;
-        const description = document.getElementById("todo-description").value;
+      function sendMessage() {
+        const message = document.getElementById("chat-message").value;
 
-        fetch("/todo", {
+        fetch("/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "x-access-tokens": token,
           },
-          body: JSON.stringify({ title, description }),
+          body: JSON.stringify({ message }),
         })
           .then((response) => response.json())
           .then((data) => {
             alert(data.message);
-            getTodos();
+            getMessages();
           });
       }
 
-      function getTodos() {
-        fetch("/todo", {
+      function getMessages() {
+        fetch("/chat", {
           method: "GET",
           headers: {
             "x-access-tokens": token,
@@ -98,15 +94,56 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            const todoList = document.getElementById("todo-list");
-            todoList.innerHTML = "";
-            data.todos.forEach((todo) => {
+            const chatList = document.getElementById("chat-list");
+            chatList.innerHTML = "";
+            data.chats.forEach((chat) => {
               const li = document.createElement("li");
-              li.textContent = `${todo.title}: ${todo.description}`;
-              todoList.appendChild(li);
+              li.textContent = `${chat.username}: ${chat.message}`;
+              chatList.appendChild(li);
             });
           });
       }
+
+      function logout() {
+        fetch("/logout", {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            window.location.href = '/';
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch("/chat", {
+          method: "GET",
+          headers: {
+            "x-access-tokens": token,
+          },
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              document.getElementById("auth").style.display = "none";
+              document.getElementById("chat").style.display = "block";
+              return response.json();
+            } else {
+              throw new Error('Not authenticated');
+            }
+          })
+          .then((data) => {
+            const chatList = document.getElementById("chat-list");
+            chatList.innerHTML = "";
+            data.chats.forEach((chat) => {
+              const li = document.createElement("li");
+              li.textContent = `${chat.username}: ${chat.message}`;
+              chatList.appendChild(li);
+            });
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      });
     </script>
   </body>
 </html>

@@ -39,6 +39,14 @@ button:hover {
     background: #555;
 }
 
+#chat-window {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 ul {
     list-style: none;
     padding: 0;
