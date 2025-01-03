@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>App</h1>
+      <div id="auth">
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Username" />
+        <input type="password" id="register-password" placeholder="Password" />
+        <button onclick="register()">Register</button>
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username" />
+        <input type="password" id="login-password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+      </div>
+      <div id="todo" style="display: none">
+        <h2>Create To-Do</h2>
+        <input type="text" id="todo-title" placeholder="Title" />
+        <input type="text" id="todo-description" placeholder="Description" />
+        <button onclick="createTodo()">Create</button>
+        <h2>Your To-Dos</h2>
+        <ul id="todo-list"></ul>
+      </div>
+    </div>
+    <script>
+      let token = "";
+
+      function register() {
+        const username = document.getElementById("register-username").value;
+        const password = document.getElementById("register-password").value;
+
+        fetch("/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => alert(data.message));
+      }
+
+      function login() {
+        const username = document.getElementById("login-username").value;
+        const password = document.getElementById("login-password").value;
+
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.token) {
+              token = data.token;
+              document.getElementById("auth").style.display = "none";
+              document.getElementById("todo").style.display = "block";
+              getTodos();
+            } else {
+              alert(data.message);
+            }
+          });
+      }
+
+      function createTodo() {
+        const title = document.getElementById("todo-title").value;
+        const description = document.getElementById("todo-description").value;
+
+        fetch("/todo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-tokens": token,
+          },
+          body: JSON.stringify({ title, description }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            getTodos();
+          });
+      }
+
+      function getTodos() {
+        fetch("/todo", {
+          method: "GET",
+          headers: {
+            "x-access-tokens": token,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const todoList = document.getElementById("todo-list");
+            todoList.innerHTML = "";
+            data.todos.forEach((todo) => {
+              const li = document.createElement("li");
+              li.textContent = `${todo.title}: ${todo.description}`;
+              todoList.appendChild(li);
+            });
+          });
+      }
+    </script>
+  </body>
+</html>
