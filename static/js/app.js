@@ -146,26 +146,28 @@ function logout() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("/chat", {
-    method: "GET",
-    headers: { "x-access-tokens": token },
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        document.getElementById("auth").style.display = "none";
-        document.getElementById("chat").style.display = "block";
-        return response.json();
-      } else {
-        throw new Error("Not authenticated");
-      }
+  if (window.location.pathname === "/dashboard") { // Check if on the dashboard page
+    fetch("/chat", {
+      method: "GET",
+      headers: { "x-access-tokens": token },
     })
-    .then((data) => {
-      renderMessages(data.messages);
-    })
-    .catch((error) => {
-      // Suppress the "Not authenticated" message
-      if (error.message !== "Not authenticated") {
-        showToast(error.message, "error");
-      }
-    });
+      .then((response) => {
+        if (response.status === 200) {
+          document.getElementById("auth").style.display = "none";
+          document.getElementById("chat").style.display = "block";
+          return response.json();
+        } else {
+          throw new Error("Not authenticated");
+        }
+      })
+      .then((data) => {
+        renderMessages(data.messages);
+      })
+      .catch((error) => {
+        // Suppress the "Not authenticated" message
+        if (error.message !== "Not authenticated") {
+          showToast(error.message, "error");
+        }
+      });
+  }
 });
