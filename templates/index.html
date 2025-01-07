@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,42 +8,49 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-  <div class="container bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-    <h1 class="text-3xl font-bold mb-6 text-center">Chat App</h1>
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center h-screen">
+  <div class="container bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg">
+    <div class="flex justify-end mb-4">
+      <button onclick="toggleDarkMode()" class="bg-gray-300 dark:bg-gray-700 text-black dark:text-white p-2 rounded">
+        Toggle Dark Mode
+      </button>
+    </div>
+    <h1 class="text-3xl font-bold mb-6 text-center text-black dark:text-white">Chat App</h1>
     <div id="auth">
-      <h2 class="text-2xl font-semibold mb-4">Register</h2>
+      <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Register</h2>
       <input type="text" id="register-username" placeholder="Username"
-        class="w-full p-2 border border-gray-300 rounded mb-2" />
+        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
       <input type="password" id="register-password" placeholder="Password"
-        class="w-full p-2 border border-gray-300 rounded mb-2" />
-      <button onclick="register()" class="w-full bg-blue-500 text-white p-2 rounded mb-4">
+        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
+      <button onclick="register()" class="w-full bg-blue-500 dark:bg-blue-700 text-white p-2 rounded mb-4">
         Register
       </button>
 
-      <h2 class="text-2xl font-semibold mb-4">Login</h2>
+      <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Login</h2>
       <input type="text" id="login-username" placeholder="Username"
-        class="w-full p-2 border border-gray-300 rounded mb-2" />
+        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
       <input type="password" id="login-password" placeholder="Password"
-        class="w-full p-2 border border-gray-300 rounded mb-2" />
-      <button onclick="login()" class="w-full bg-green-500 text-white p-2 rounded">
+        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
+      <button onclick="login()" class="w-full bg-green-500 dark:bg-green-700 text-white p-2 rounded">
         Login
       </button>
     </div>
 
     <div id="chat" style="display: none">
       <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-semibold mb-4">Chat</h2>
-        <span id="current-username" class="text-xl font-semibold mb-4"></span>
+        <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Chat</h2>
+        <span id="current-username" class="text-xl font-semibold mb-4 text-black dark:text-white"></span>
       </div>
-      <div id="chat-messages" class="h-64 overflow-y-scroll mb-4 p-2 border border-gray-300 rounded space-y-2"></div>
+      <div id="chat-messages"
+        class="h-64 overflow-y-scroll mb-4 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-white dark:bg-gray-700 text-black dark:text-white">
+      </div>
       <div class="flex items-center mb-4">
         <input type="text" id="chat-message" placeholder="Type a message"
-          class="flex-grow p-2 border border-gray-300 rounded-l" />
-        <button onclick="sendMessage()" class="bg-purple-500 text-white p-2 rounded-r">
+          class="flex-grow p-2 border border-gray-300 dark:border-gray-600 rounded-l bg-white dark:bg-gray-700 text-black dark:text-white" />
+        <button onclick="sendMessage()" class="bg-purple-500 dark:bg-purple-700 text-white p-2 rounded-r">
           <?xml version="1.0" encoding="iso-8859-1"?>
           <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-          <svg fill="#000000" height="1.5rem" width="1.5rem" version="1.1" id="Layer_1"
+          <svg id="send-svg" fill="#000000" height="1.5rem" width="1.5rem" version="1.1" id="Layer_1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.001 512.001"
             xml:space="preserve">
             <g>
@@ -64,7 +71,7 @@
           </svg>
         </button>
       </div>
-      <button onclick="logout()" class="w-full bg-red-500 text-white p-2 rounded">
+      <button onclick="logout()" class="w-full bg-red-500 dark:bg-red-700 text-white p-2 rounded">
         Logout
       </button>
     </div>

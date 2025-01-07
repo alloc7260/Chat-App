@@ -100,7 +100,7 @@ function renderMessages(messages) {
   chatMessages.innerHTML = "";
   messages.forEach((msg) => {
     const div = document.createElement("div");
-    div.className = "p-2 bg-gray-200 rounded-lg flex justify-between items-center";
+    div.className = "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-lg flex justify-between items-center";
     const iconsDiv = document.createElement("div");
     iconsDiv.className = "flex items-center space-x-2";
     const copyIcon = document.createElement("button");
@@ -172,3 +172,18 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 });
+
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  if (document.documentElement.classList.contains('dark')) {
+    localStorage.setItem('theme', 'dark');
+    document.getElementById('send-svg').setAttribute('fill', '#ffffff');
+  } else {
+    localStorage.removeItem('theme');
+    document.getElementById('send-svg').setAttribute('fill', '#000000');
+  }
+}
+
+tailwind.config = {
+  darkMode: 'class'
+}
