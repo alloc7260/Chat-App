@@ -88,6 +88,36 @@ function deleteMessage(messageId) {
     });
 }
 
+function renderMessages(messages) {
+  const chatMessages = document.getElementById("chat-messages");
+  chatMessages.innerHTML = "";
+  messages.forEach((msg) => {
+    const div = document.createElement("div");
+    div.className = "p-2 bg-gray-200 rounded-lg flex justify-between items-center";
+    const iconsDiv = document.createElement("div");
+    iconsDiv.className = "flex items-center space-x-2";
+    const copyIcon = document.createElement("button");
+    copyIcon.className = "text-blue-500";
+    copyIcon.innerHTML = "&#x2398;";
+    copyIcon.onclick = () => {
+      navigator.clipboard.writeText(msg.message);
+      showToast("Message copied to clipboard!", "success");
+    };
+    const deleteIcon = document.createElement("button");
+    deleteIcon.className = "text-red-500";
+    deleteIcon.innerHTML = "&#x1F5D1;";
+    deleteIcon.onclick = () => deleteMessage(msg.id);
+    iconsDiv.appendChild(copyIcon);
+    iconsDiv.appendChild(deleteIcon);
+    const messageText = document.createElement("div");
+    messageText.className = "text-right flex-grow";
+    messageText.textContent = msg.message;
+    div.appendChild(iconsDiv);
+    div.appendChild(messageText);
+    chatMessages.appendChild(div);
+  });
+}
+
 function getMessages() {
   fetch("/chat", {
     method: "GET",
@@ -95,29 +125,7 @@ function getMessages() {
   })
     .then((response) => response.json())
     .then((data) => {
-      const chatMessages = document.getElementById("chat-messages");
-      chatMessages.innerHTML = "";
-      data.messages.forEach((msg) => {
-        const div = document.createElement("div");
-        div.className = "p-2 bg-gray-200 rounded-lg flex justify-between items-center";
-        const messageText = document.createElement("span");
-        messageText.textContent = msg.message;
-        const copyIcon = document.createElement("button");
-        copyIcon.className = "ml-2 text-blue-500";
-        copyIcon.innerHTML = "&#x2398;"; // Copy icon
-        copyIcon.onclick = () => {
-          navigator.clipboard.writeText(msg.message);
-          showToast("Message copied to clipboard!", "success");
-        };
-        const deleteIcon = document.createElement("button");
-        deleteIcon.className = "ml-2 text-red-500";
-        deleteIcon.innerHTML = "&#x1F5D1;"; // Delete icon
-        deleteIcon.onclick = () => deleteMessage(msg.id); // Ensure correct property is accessed
-        div.appendChild(messageText);
-        div.appendChild(copyIcon);
-        div.appendChild(deleteIcon);
-        chatMessages.appendChild(div);
-      });
+      renderMessages(data.messages);
     });
 }
 
@@ -145,29 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
     .then((data) => {
-      const chatMessages = document.getElementById("chat-messages");
-      chatMessages.innerHTML = "";
-      data.messages.forEach((msg) => {
-        const div = document.createElement("div");
-        div.className = "p-2 bg-gray-200 rounded-lg flex justify-between items-center";
-        const messageText = document.createElement("span");
-        messageText.textContent = msg.message;
-        const copyIcon = document.createElement("button");
-        copyIcon.className = "ml-2 text-blue-500";
-        copyIcon.innerHTML = "&#x2398;"; // Copy icon
-        copyIcon.onclick = () => {
-          navigator.clipboard.writeText(msg.message);
-          showToast("Message copied to clipboard!", "success");
-        };
-        const deleteIcon = document.createElement("button");
-        deleteIcon.className = "ml-2 text-red-500";
-        deleteIcon.innerHTML = "&#x1F5D1;"; // Delete icon
-        deleteIcon.onclick = () => deleteMessage(msg.id); // Ensure correct property is accessed
-        div.appendChild(messageText);
-        div.appendChild(copyIcon);
-        div.appendChild(deleteIcon);
-        chatMessages.appendChild(div);
-      });
+      renderMessages(data.messages);
     })
     .catch((error) => {
       showToast(error.message, "error");
