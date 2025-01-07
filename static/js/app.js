@@ -155,12 +155,17 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("auth").style.display = "none";
         document.getElementById("chat").style.display = "block";
         return response.json();
+      } else {
+        throw new Error("Not authenticated");
       }
     })
     .then((data) => {
       renderMessages(data.messages);
     })
     .catch((error) => {
-      showToast(error.message, "error");
+      // Suppress the "Not authenticated" message
+      if (error.message !== "Not authenticated") {
+        showToast(error.message, "error");
+      }
     });
 });
