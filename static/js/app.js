@@ -1,4 +1,4 @@
-let token = "";
+let token;
 
 function showToast(message, type = "info") {
   const toastContainer =

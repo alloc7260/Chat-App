@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, make_response
+from flask import Flask, request, jsonify, render_template, make_response, redirect
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
@@ -17,20 +17,12 @@ users_collection = mongo.db.users
 todos_collection = mongo.db.chats
 
 
-# check connection mongoDB
-@app.route("/check")
-def check():
-    # list databases
-    print(mongo.db.list_collection_names())
-    return jsonify({"message": "Connected to MongoDB!"})
-
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = request.cookies.get("token")
         if not token:
-            return jsonify({"message": "Token is missing!"}), 403
+            return redirect("/")
         try:
             data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
             current_user = users_collection.find_one({"username": data["username"]})
@@ -104,7 +96,9 @@ def get_messages(current_user):
 @app.route("/chat/<message_id>", methods=["DELETE"])
 @token_required
 def delete_message(current_user, message_id):
-    result = todos_collection.delete_one({"_id": ObjectId(message_id), "user_id": current_user["_id"]})
+    result = todos_collection.delete_one(
+        {"_id": ObjectId(message_id), "user_id": current_user["_id"]}
+    )
     if result.deleted_count == 1:
         return jsonify({"message": "Message deleted!"}), 200
     else:
@@ -119,6 +113,13 @@ def dashboard(current_user):
 
 @app.route("/")
 def index():
+    token = request.cookies.get("token")
+    if token:
+        try:
+            jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            return redirect("/dashboard")
+        except:
+            pass
     return render_template("index.html")
 
 
