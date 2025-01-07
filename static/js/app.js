@@ -87,7 +87,18 @@ function getMessages() {
       chatMessages.innerHTML = "";
       data.messages.forEach((msg) => {
         const div = document.createElement("div");
-        div.textContent = msg.message;
+        div.className = "p-2 bg-gray-200 rounded-lg flex justify-between items-center";
+        const messageText = document.createElement("span");
+        messageText.textContent = msg.message;
+        const copyIcon = document.createElement("button");
+        copyIcon.className = "ml-2 text-blue-500";
+        copyIcon.innerHTML = "&#x2398;"; // Copy icon
+        copyIcon.onclick = () => {
+          navigator.clipboard.writeText(msg.message);
+          showToast("Message copied to clipboard!", "success");
+        };
+        div.appendChild(messageText);
+        div.appendChild(copyIcon);
         chatMessages.appendChild(div);
       });
     });
@@ -121,7 +132,18 @@ document.addEventListener("DOMContentLoaded", function () {
       chatMessages.innerHTML = "";
       data.messages.forEach((msg) => {
         const div = document.createElement("div");
-        div.textContent = msg.message;
+        div.className = "p-2 bg-gray-200 rounded-lg flex justify-between items-center";
+        const messageText = document.createElement("span");
+        messageText.textContent = msg.message;
+        const copyIcon = document.createElement("button");
+        copyIcon.className = "ml-2 text-blue-500";
+        copyIcon.innerHTML = "&#x2398;"; // Copy icon
+        copyIcon.onclick = () => {
+          navigator.clipboard.writeText(msg.message);
+          showToast("Message copied to clipboard!", "success");
+        };
+        div.appendChild(messageText);
+        div.appendChild(copyIcon);
         chatMessages.appendChild(div);
       });
     })
