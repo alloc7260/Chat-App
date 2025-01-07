@@ -4,31 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App</title>
-    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div class="container">
-      <h1>App</h1>
+  <body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="container bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+      <h1 class="text-3xl font-bold mb-6 text-center">App</h1>
       <div id="auth">
-        <h2>Register</h2>
-        <input type="text" id="register-username" placeholder="Username" />
-        <input type="password" id="register-password" placeholder="Password" />
-        <button onclick="register()">Register</button>
-        <h2>Login</h2>
-        <input type="text" id="login-username" placeholder="Username" />
-        <input type="password" id="login-password" placeholder="Password" />
-        <button onclick="login()">Login</button>
+        <h2 class="text-2xl font-semibold mb-4">Register</h2>
+        <input type="text" id="register-username" placeholder="Username" class="w-full p-2 border border-gray-300 rounded mb-2" />
+        <input type="password" id="register-password" placeholder="Password" class="w-full p-2 border border-gray-300 rounded mb-2" />
+        <button onclick="register()" class="w-full bg-blue-500 text-white p-2 rounded mb-4">Register</button>
+
+        <h2 class="text-2xl font-semibold mb-4">Login</h2>
+        <input type="text" id="login-username" placeholder="Username" class="w-full p-2 border border-gray-300 rounded mb-2" />
+        <input type="password" id="login-password" placeholder="Password" class="w-full p-2 border border-gray-300 rounded mb-2" />
+        <button onclick="login()" class="w-full bg-green-500 text-white p-2 rounded">Login</button>
       </div>
+
       <div id="todo" style="display: none">
-        <h2>Create To-Do</h2>
-        <input type="text" id="todo-title" placeholder="Title" />
-        <input type="text" id="todo-description" placeholder="Description" />
-        <button onclick="createTodo()">Create</button>
-        <h2>Your To-Dos</h2>
-        <ul id="todo-list"></ul>
-        <button onclick="logout()">Logout</button>
+        <h2 class="text-2xl font-semibold mb-4">Create To-Do</h2>
+        <input type="text" id="todo-title" placeholder="Title" class="w-full p-2 border border-gray-300 rounded mb-2" />
+        <input type="text" id="todo-description" placeholder="Description" class="w-full p-2 border border-gray-300 rounded mb-2" />
+        <button onclick="createTodo()" class="w-full bg-purple-500 text-white p-2 rounded mb-4">Create</button>
+
+        <h2 class="text-2xl font-semibold mb-4">Your To-Dos</h2>
+        <ul id="todo-list" class="list-disc list-inside mb-4"></ul>
+        <button onclick="logout()" class="w-full bg-red-500 text-white p-2 rounded">Logout</button>
       </div>
     </div>
+
     <script>
       let token = "";
 
