@@ -5,12 +5,11 @@ import jwt
 import datetime
 from functools import wraps
 from bson import ObjectId
+import os
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = (
-    "mongodb://admin:example@localhost:27017/todoDB?authSource=admin"
-)
-app.config["SECRET_KEY"] = "febghbn23u48934jfi3j4dj394u345r23"
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 users_collection = mongo.db.users
@@ -124,4 +123,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0")
