@@ -6,9 +6,6 @@ import datetime
 from functools import wraps
 from bson import ObjectId
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
