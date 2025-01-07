@@ -39,7 +39,11 @@ function register() {
     body: JSON.stringify({ username, password }),
   })
     .then((response) => response.json())
-    .then((data) => showToast(data.message, "success"));
+    .then((data) => {
+      showToast(data.message, "success");
+      document.getElementById("register-username").value = ""; // Clear the input
+      document.getElementById("register-password").value = ""; // Clear the input
+    });
 }
 
 function login() {
@@ -58,6 +62,8 @@ function login() {
       } else {
         showToast(data.message, "error");
       }
+      document.getElementById("login-username").value = ""; // Clear the input
+      document.getElementById("login-password").value = ""; // Clear the input
     });
 }
 
@@ -72,6 +78,7 @@ function sendMessage() {
     .then((response) => response.json())
     .then((data) => {
       showToast(data.message, "success");
+      document.getElementById("chat-message").value = ""; // Clear the input
       getMessages();
     });
 }
@@ -148,8 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("auth").style.display = "none";
         document.getElementById("chat").style.display = "block";
         return response.json();
-      } else {
-        throw new Error("Not authenticated");
       }
     })
     .then((data) => {
