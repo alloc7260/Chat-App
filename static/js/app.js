@@ -199,3 +199,5 @@ tailwind.config = {
 };
 
 document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
+localStorage.setItem("theme", "dark");
+document.getElementById("send-svg").setAttribute("fill", "#ffffff");
