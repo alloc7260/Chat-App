@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       })
       .then((data) => {
+        document.getElementById("current-username").textContent = data.username;
         renderMessages(data.messages);
       })
       .catch((error) => {

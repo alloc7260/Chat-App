@@ -90,7 +90,7 @@ def create_message(current_user):
 def get_messages(current_user):
     messages = todos_collection.find({"user_id": current_user["_id"]})
     output = [{"id": str(msg["_id"]), "message": msg["message"]} for msg in messages]
-    return jsonify({"messages": output})
+    return jsonify({"username": current_user["username"], "messages": output})
 
 
 @app.route("/chat/<message_id>", methods=["DELETE"])
