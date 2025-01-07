@@ -89,7 +89,7 @@ def create_todo(current_user):
             "description": data["description"],
         }
     )
-    return jsonify({"message": "To-do created!"}), 201
+    return jsonify({"message": "created!"}), 201
 
 
 @app.route("/todo", methods=["GET"])
