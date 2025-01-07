@@ -11,145 +11,77 @@
       <h1 class="text-3xl font-bold mb-6 text-center">App</h1>
       <div id="auth">
         <h2 class="text-2xl font-semibold mb-4">Register</h2>
-        <input type="text" id="register-username" placeholder="Username" class="w-full p-2 border border-gray-300 rounded mb-2" />
-        <input type="password" id="register-password" placeholder="Password" class="w-full p-2 border border-gray-300 rounded mb-2" />
-        <button onclick="register()" class="w-full bg-blue-500 text-white p-2 rounded mb-4">Register</button>
+        <input
+          type="text"
+          id="register-username"
+          placeholder="Username"
+          class="w-full p-2 border border-gray-300 rounded mb-2"
+        />
+        <input
+          type="password"
+          id="register-password"
+          placeholder="Password"
+          class="w-full p-2 border border-gray-300 rounded mb-2"
+        />
+        <button
+          onclick="register()"
+          class="w-full bg-blue-500 text-white p-2 rounded mb-4"
+        >
+          Register
+        </button>
 
         <h2 class="text-2xl font-semibold mb-4">Login</h2>
-        <input type="text" id="login-username" placeholder="Username" class="w-full p-2 border border-gray-300 rounded mb-2" />
-        <input type="password" id="login-password" placeholder="Password" class="w-full p-2 border border-gray-300 rounded mb-2" />
-        <button onclick="login()" class="w-full bg-green-500 text-white p-2 rounded">Login</button>
+        <input
+          type="text"
+          id="login-username"
+          placeholder="Username"
+          class="w-full p-2 border border-gray-300 rounded mb-2"
+        />
+        <input
+          type="password"
+          id="login-password"
+          placeholder="Password"
+          class="w-full p-2 border border-gray-300 rounded mb-2"
+        />
+        <button
+          onclick="login()"
+          class="w-full bg-green-500 text-white p-2 rounded"
+        >
+          Login
+        </button>
       </div>
 
       <div id="todo" style="display: none">
         <h2 class="text-2xl font-semibold mb-4">Create To-Do</h2>
-        <input type="text" id="todo-title" placeholder="Title" class="w-full p-2 border border-gray-300 rounded mb-2" />
-        <input type="text" id="todo-description" placeholder="Description" class="w-full p-2 border border-gray-300 rounded mb-2" />
-        <button onclick="createTodo()" class="w-full bg-purple-500 text-white p-2 rounded mb-4">Create</button>
+        <input
+          type="text"
+          id="todo-title"
+          placeholder="Title"
+          class="w-full p-2 border border-gray-300 rounded mb-2"
+        />
+        <input
+          type="text"
+          id="todo-description"
+          placeholder="Description"
+          class="w-full p-2 border border-gray-300 rounded mb-2"
+        />
+        <button
+          onclick="createTodo()"
+          class="w-full bg-purple-500 text-white p-2 rounded mb-4"
+        >
+          Create
+        </button>
 
         <h2 class="text-2xl font-semibold mb-4">Your To-Dos</h2>
         <ul id="todo-list" class="list-disc list-inside mb-4"></ul>
-        <button onclick="logout()" class="w-full bg-red-500 text-white p-2 rounded">Logout</button>
+        <button
+          onclick="logout()"
+          class="w-full bg-red-500 text-white p-2 rounded"
+        >
+          Logout
+        </button>
       </div>
     </div>
-
-    <script>
-      let token = "";
-
-      function register() {
-        const username = document.getElementById("register-username").value;
-        const password = document.getElementById("register-password").value;
-
-        fetch("/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        })
-          .then((response) => response.json())
-          .then((data) => alert(data.message));
-      }
-
-      function login() {
-        const username = document.getElementById("login-username").value;
-        const password = document.getElementById("login-password").value;
-
-        fetch("/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.message === 'Login successful!') {
-              window.location.href = '/dashboard';
-            } else {
-              alert(data.message);
-            }
-          });
-      }
-
-      function createTodo() {
-        const title = document.getElementById("todo-title").value;
-        const description = document.getElementById("todo-description").value;
-
-        fetch("/todo", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-access-tokens": token,
-          },
-          body: JSON.stringify({ title, description }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            alert(data.message);
-            getTodos();
-          });
-      }
-
-      function getTodos() {
-        fetch("/todo", {
-          method: "GET",
-          headers: {
-            "x-access-tokens": token,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            const todoList = document.getElementById("todo-list");
-            todoList.innerHTML = "";
-            data.todos.forEach((todo) => {
-              const li = document.createElement("li");
-              li.textContent = `${todo.title}: ${todo.description}`;
-              todoList.appendChild(li);
-            });
-          });
-      }
-
-      function logout() {
-        fetch("/logout", {
-          method: "POST",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            alert(data.message);
-            window.location.href = '/';
-          });
-      }
-
-      document.addEventListener("DOMContentLoaded", function() {
-        fetch("/todo", {
-          method: "GET",
-          headers: {
-            "x-access-tokens": token,
-          },
-        })
-          .then((response) => {
-            if (response.status === 200) {
-              document.getElementById("auth").style.display = "none";
-              document.getElementById("todo").style.display = "block";
-              return response.json();
-            } else {
-              throw new Error('Not authenticated');
-            }
-          })
-          .then((data) => {
-            const todoList = document.getElementById("todo-list");
-            todoList.innerHTML = "";
-            data.todos.forEach((todo) => {
-              const li = document.createElement("li");
-              li.textContent = `${todo.title}: ${todo.description}`;
-              todoList.appendChild(li);
-            });
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      });
-    </script>
+    <script src="/static/js/app.js"></script>
   </body>
 </html>
