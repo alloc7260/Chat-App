@@ -173,17 +173,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+let sun_svg = `
+☀️
+`;
+
+let moon_svg = `
+🌚
+`;
+
 function toggleDarkMode() {
-  document.documentElement.classList.toggle('dark');
-  if (document.documentElement.classList.contains('dark')) {
-    localStorage.setItem('theme', 'dark');
-    document.getElementById('send-svg').setAttribute('fill', '#ffffff');
+  document.documentElement.classList.toggle("dark");
+  if (document.documentElement.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    document.getElementById("send-svg").setAttribute("fill", "#ffffff");
+    document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
   } else {
-    localStorage.removeItem('theme');
-    document.getElementById('send-svg').setAttribute('fill', '#000000');
+    localStorage.removeItem("theme");
+    document.getElementById("send-svg").setAttribute("fill", "#000000");
+    document.getElementById("dark-mode-toggle").innerHTML = moon_svg;
   }
 }
 
 tailwind.config = {
-  darkMode: 'class'
-}
+  darkMode: "class",
+};
+
+document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
