@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 import datetime
 from functools import wraps
+from bson import ObjectId
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = (
@@ -96,8 +97,18 @@ def create_message(current_user):
 @token_required
 def get_messages(current_user):
     messages = todos_collection.find({"user_id": current_user["_id"]})
-    output = [{"message": msg["message"]} for msg in messages]
+    output = [{"id": str(msg["_id"]), "message": msg["message"]} for msg in messages]
     return jsonify({"messages": output})
+
+
+@app.route("/chat/<message_id>", methods=["DELETE"])
+@token_required
+def delete_message(current_user, message_id):
+    result = todos_collection.delete_one({"_id": ObjectId(message_id), "user_id": current_user["_id"]})
+    if result.deleted_count == 1:
+        return jsonify({"message": "Message deleted!"}), 200
+    else:
+        return jsonify({"message": "Message not found!"}), 404
 
 
 @app.route("/dashboard")

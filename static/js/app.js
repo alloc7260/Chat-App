@@ -76,6 +76,18 @@ function sendMessage() {
     });
 }
 
+function deleteMessage(messageId) {
+  fetch(`/chat/${messageId}`, {
+    method: "DELETE",
+    headers: { "x-access-tokens": token },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      showToast(data.message, "success");
+      getMessages();
+    });
+}
+
 function getMessages() {
   fetch("/chat", {
     method: "GET",
@@ -97,8 +109,13 @@ function getMessages() {
           navigator.clipboard.writeText(msg.message);
           showToast("Message copied to clipboard!", "success");
         };
+        const deleteIcon = document.createElement("button");
+        deleteIcon.className = "ml-2 text-red-500";
+        deleteIcon.innerHTML = "&#x1F5D1;"; // Delete icon
+        deleteIcon.onclick = () => deleteMessage(msg.id); // Ensure correct property is accessed
         div.appendChild(messageText);
         div.appendChild(copyIcon);
+        div.appendChild(deleteIcon);
         chatMessages.appendChild(div);
       });
     });
@@ -142,8 +159,13 @@ document.addEventListener("DOMContentLoaded", function () {
           navigator.clipboard.writeText(msg.message);
           showToast("Message copied to clipboard!", "success");
         };
+        const deleteIcon = document.createElement("button");
+        deleteIcon.className = "ml-2 text-red-500";
+        deleteIcon.innerHTML = "&#x1F5D1;"; // Delete icon
+        deleteIcon.onclick = () => deleteMessage(msg.id); // Ensure correct property is accessed
         div.appendChild(messageText);
         div.appendChild(copyIcon);
+        div.appendChild(deleteIcon);
         chatMessages.appendChild(div);
       });
     })
