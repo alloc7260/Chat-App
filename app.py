@@ -13,7 +13,7 @@ app.config["SECRET_KEY"] = "febghbn23u48934jfi3j4dj394u345r23"
 
 mongo = PyMongo(app)
 users_collection = mongo.db.users
-todos_collection = mongo.db.todos
+todos_collection = mongo.db.chats
 
 
 # check connection mongoDB
@@ -78,28 +78,26 @@ def logout(current_user):
     return resp
 
 
-@app.route("/todo", methods=["POST"])
+@app.route("/chat", methods=["POST"])
 @token_required
-def create_todo(current_user):
+def create_message(current_user):
     data = request.get_json()
     todos_collection.insert_one(
         {
             "user_id": current_user["_id"],
-            "title": data["title"],
-            "description": data["description"],
+            "username": current_user["username"],
+            "message": data["message"],
         }
     )
-    return jsonify({"message": "created!"}), 201
+    return jsonify({"message": "Message sent!"}), 201
 
 
-@app.route("/todo", methods=["GET"])
+@app.route("/chat", methods=["GET"])
 @token_required
-def get_todos(current_user):
-    todos = todos_collection.find({"user_id": current_user["_id"]})
-    output = [
-        {"title": todo["title"], "description": todo["description"]} for todo in todos
-    ]
-    return jsonify({"todos": output})
+def get_messages(current_user):
+    messages = todos_collection.find({"user_id": current_user["_id"]})
+    output = [{"message": msg["message"]} for msg in messages]
+    return jsonify({"messages": output})
 
 
 @app.route("/dashboard")
@@ -114,4 +112,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)

@@ -61,35 +61,34 @@ function login() {
     });
 }
 
-function createTodo() {
-  const title = document.getElementById("todo-title").value;
-  const description = document.getElementById("todo-description").value;
+function sendMessage() {
+  const message = document.getElementById("chat-message").value;
 
-  fetch("/todo", {
+  fetch("/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-access-tokens": token },
-    body: JSON.stringify({ title, description }),
+    body: JSON.stringify({ message }),
   })
     .then((response) => response.json())
     .then((data) => {
       showToast(data.message, "success");
-      getTodos();
+      getMessages();
     });
 }
 
-function getTodos() {
-  fetch("/todo", {
+function getMessages() {
+  fetch("/chat", {
     method: "GET",
     headers: { "x-access-tokens": token },
   })
     .then((response) => response.json())
     .then((data) => {
-      const todoList = document.getElementById("todo-list");
-      todoList.innerHTML = "";
-      data.todos.forEach((todo) => {
-        const li = document.createElement("li");
-        li.textContent = `${todo.title}: ${todo.description}`;
-        todoList.appendChild(li);
+      const chatMessages = document.getElementById("chat-messages");
+      chatMessages.innerHTML = "";
+      data.messages.forEach((msg) => {
+        const div = document.createElement("div");
+        div.textContent = msg.message;
+        chatMessages.appendChild(div);
       });
     });
 }
@@ -104,26 +103,26 @@ function logout() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("/todo", {
+  fetch("/chat", {
     method: "GET",
     headers: { "x-access-tokens": token },
   })
     .then((response) => {
       if (response.status === 200) {
         document.getElementById("auth").style.display = "none";
-        document.getElementById("todo").style.display = "block";
+        document.getElementById("chat").style.display = "block";
         return response.json();
       } else {
         throw new Error("Not authenticated");
       }
     })
     .then((data) => {
-      const todoList = document.getElementById("todo-list");
-      todoList.innerHTML = "";
-      data.todos.forEach((todo) => {
-        const li = document.createElement("li");
-        li.textContent = `${todo.title}: ${todo.description}`;
-        todoList.appendChild(li);
+      const chatMessages = document.getElementById("chat-messages");
+      chatMessages.innerHTML = "";
+      data.messages.forEach((msg) => {
+        const div = document.createElement("div");
+        div.textContent = msg.message;
+        chatMessages.appendChild(div);
       });
     })
     .catch((error) => {

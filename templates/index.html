@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>App</title>
+  <title>Chat App</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center h-screen">
   <div class="container bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-    <h1 class="text-3xl font-bold mb-6 text-center">App</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center">Chat App</h1>
     <div id="auth">
       <h2 class="text-2xl font-semibold mb-4">Register</h2>
       <input type="text" id="register-username" placeholder="Username"
@@ -31,17 +31,14 @@
       </button>
     </div>
 
-    <div id="todo" style="display: none">
-      <h2 class="text-2xl font-semibold mb-4">Create</h2>
-      <input type="text" id="todo-title" placeholder="Title" class="w-full p-2 border border-gray-300 rounded mb-2" />
-      <input type="text" id="todo-description" placeholder="Description"
+    <div id="chat" style="display: none">
+      <h2 class="text-2xl font-semibold mb-4">Chat</h2>
+      <div id="chat-messages" class="h-64 overflow-y-scroll mb-4 p-2 border border-gray-300 rounded"></div>
+      <input type="text" id="chat-message" placeholder="Type a message"
         class="w-full p-2 border border-gray-300 rounded mb-2" />
-      <button onclick="createTodo()" class="w-full bg-purple-500 text-white p-2 rounded mb-4">
-        Create
+      <button onclick="sendMessage()" class="w-full bg-purple-500 text-white p-2 rounded mb-4">
+        Send
       </button>
-
-      <h2 class="text-2xl font-semibold mb-4">Your Data</h2>
-      <ul id="todo-list" class="list-disc list-inside mb-4"></ul>
       <button onclick="logout()" class="w-full bg-red-500 text-white p-2 rounded">
         Logout
       </button>
