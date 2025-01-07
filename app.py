@@ -26,7 +26,7 @@ def token_required(f):
             data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
             current_user = users_collection.find_one({"username": data["username"]})
         except:
-            return jsonify({"message": "Token is invalid!"}), 403
+            return redirect("/")
         return f(current_user, *args, **kwargs)
 
     return decorated

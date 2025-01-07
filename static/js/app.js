@@ -104,7 +104,7 @@ function renderMessages(messages) {
     const iconsDiv = document.createElement("div");
     iconsDiv.className = "flex items-center space-x-2";
     const copyIcon = document.createElement("button");
-    copyIcon.className = "text-blue-500";
+    copyIcon.className = "text-xl text-red-500";
     copyIcon.innerHTML = "&#x2398;";
     copyIcon.onclick = () => {
       navigator.clipboard.writeText(msg.message);
@@ -174,11 +174,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let sun_svg = `
-☀️
+🌞
 `;
 
 let moon_svg = `
-🌚
+🌜
 `;
 
 function toggleDarkMode() {
