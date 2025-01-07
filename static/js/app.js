@@ -193,12 +193,17 @@ tailwind.config = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  const theme = localStorage.getItem("theme") || "light";
+  let theme = localStorage.getItem("theme");
+  if (!theme) {
+    theme = "dark";
+    localStorage.setItem("theme", theme);
+  }
   if (theme === "dark") {
     document.documentElement.classList.add("dark");
     document.getElementById("send-svg").setAttribute("fill", "#ffffff");
     document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
   } else {
+    document.documentElement.classList.remove("dark");
     document.getElementById("send-svg").setAttribute("fill", "#000000");
     document.getElementById("dark-mode-toggle").innerHTML = moon_svg;
   }
