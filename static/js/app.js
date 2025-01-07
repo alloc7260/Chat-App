@@ -182,22 +182,24 @@ let moon_svg = `
 `;
 
 function toggleDarkMode() {
-  document.documentElement.classList.toggle("dark");
-  if (document.documentElement.classList.contains("dark")) {
-    localStorage.setItem("theme", "dark");
-    document.getElementById("send-svg").setAttribute("fill", "#ffffff");
-    document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
-  } else {
-    localStorage.removeItem("theme");
-    document.getElementById("send-svg").setAttribute("fill", "#000000");
-    document.getElementById("dark-mode-toggle").innerHTML = moon_svg;
-  }
+  const isDarkMode = document.documentElement.classList.toggle("dark");
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+  document.getElementById("send-svg").setAttribute("fill", isDarkMode ? "#ffffff" : "#000000");
+  document.getElementById("dark-mode-toggle").innerHTML = isDarkMode ? sun_svg : moon_svg;
 }
 
 tailwind.config = {
   darkMode: "class",
 };
 
-document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
-localStorage.setItem("theme", "dark");
-document.getElementById("send-svg").setAttribute("fill", "#ffffff");
+document.addEventListener("DOMContentLoaded", () => {
+  const theme = localStorage.getItem("theme") || "light";
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+    document.getElementById("send-svg").setAttribute("fill", "#ffffff");
+    document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
+  } else {
+    document.getElementById("send-svg").setAttribute("fill", "#000000");
+    document.getElementById("dark-mode-toggle").innerHTML = moon_svg;
+  }
+});
