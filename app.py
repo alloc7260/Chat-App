@@ -104,6 +104,20 @@ def delete_message(current_user, message_id):
         return jsonify({"message": "Message not found!"}), 404
 
 
+@app.route("/chat/<message_id>", methods=["PUT"])
+@token_required
+def update_message(current_user, message_id):
+    data = request.get_json()
+    result = todos_collection.update_one(
+        {"_id": ObjectId(message_id), "user_id": current_user["_id"]},
+        {"$set": {"message": data["message"]}}
+    )
+    if result.matched_count == 1:
+        return jsonify({"message": "Message updated!"}), 200
+    else:
+        return jsonify({"message": "Message not found!"}), 404
+
+
 @app.route("/dashboard")
 @token_required
 def dashboard(current_user):

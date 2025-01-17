@@ -108,12 +108,41 @@ function deleteMessage(messageId) {
     });
 }
 
+function editMessage(messageId, currentMessage) {
+  const messageElement = document.getElementById(`message-${messageId}`);
+  messageElement.innerHTML = `
+    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
+    <button onclick="saveMessage('${messageId}')" class="bg-blue-500 dark:bg-blue-700 text-white p-2 rounded">
+      &#x2714;
+    </button>
+    <button onclick="getMessages()" class="bg-gray-500 dark:bg-gray-700 text-white p-2 rounded">
+      &#x2716;
+    </button>
+  `;
+}
+
+function saveMessage(messageId) {
+  const newMessage = document.getElementById(`edit-message-${messageId}`).value;
+
+  fetch(`/chat/${messageId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", "x-access-tokens": token },
+    body: JSON.stringify({ message: newMessage }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      showToast(data.message, "success");
+      getMessages();
+    });
+}
+
 function renderMessages(messages) {
   const chatMessages = document.getElementById("chat-messages");
   chatMessages.innerHTML = "";
   messages.forEach((msg) => {
     const div = document.createElement("div");
     div.className = "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-lg flex justify-between items-center";
+    div.id = `message-${msg.id}`;
     const iconsDiv = document.createElement("div");
     iconsDiv.className = "flex items-center space-x-2";
     const copyIcon = document.createElement("button");
@@ -123,11 +152,16 @@ function renderMessages(messages) {
       navigator.clipboard.writeText(msg.message);
       showToast("Message copied to clipboard!", "success");
     };
+    const editIcon = document.createElement("button");
+    editIcon.className = "text-yellow-500";
+    editIcon.innerHTML = "&#x270E;";
+    editIcon.onclick = () => editMessage(msg.id, msg.message);
     const deleteIcon = document.createElement("button");
     deleteIcon.className = "text-red-500";
     deleteIcon.innerHTML = "&#x1F5D1;";
     deleteIcon.onclick = () => deleteMessage(msg.id);
     iconsDiv.appendChild(copyIcon);
+    iconsDiv.appendChild(editIcon);
     iconsDiv.appendChild(deleteIcon);
     const messageText = document.createElement("div");
     messageText.className = "text-right flex-grow";
