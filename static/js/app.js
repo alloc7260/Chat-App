@@ -43,6 +43,19 @@ function register() {
       showToast(data.message, "success");
       document.getElementById("register-username").value = ""; // Clear the input
       document.getElementById("register-password").value = ""; // Clear the input
+      return fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === "Login successful!") {
+        window.location.href = "/dashboard";
+      } else {
+        showToast(data.message, "error");
+      }
     });
 }
 
