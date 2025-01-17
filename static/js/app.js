@@ -4,7 +4,7 @@ function showToast(message, type = "info") {
   const toastContainer =
     document.getElementById("toast-container") || createToastContainer();
   const toast = document.createElement("div");
-  toast.className = `p-4 mb-4 text-white rounded-lg shadow-lg transition-opacity duration-300 ease-in-out ${
+  toast.className = `p-4 mb-4 text-white rounded-md shadow-lg transition-opacity duration-300 ease-in-out ${
     type === "success"
       ? "bg-green-500"
       : type === "error"
@@ -111,11 +111,11 @@ function deleteMessage(messageId) {
 function editMessage(messageId, currentMessage) {
   const messageElement = document.getElementById(`message-${messageId}`);
   messageElement.innerHTML = `
-    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
-    <button onclick="saveMessage('${messageId}')" class="bg-blue-500 dark:bg-blue-700 text-white p-2 rounded">
+    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
+    <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-slate-600">
       &#x2714;
     </button>
-    <button onclick="getMessages()" class="bg-gray-500 dark:bg-gray-700 text-white p-2 rounded">
+    <button onclick="getMessages()" class="rounded-md p-2.5 text-center text-sm transition-all text-slate-600">
       &#x2716;
     </button>
   `;
@@ -141,7 +141,7 @@ function renderMessages(messages) {
   chatMessages.innerHTML = "";
   messages.forEach((msg) => {
     const div = document.createElement("div");
-    div.className = "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-lg flex justify-between items-center";
+    div.className = "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-md flex justify-between items-center";
     div.id = `message-${msg.id}`;
     const iconsDiv = document.createElement("div");
     iconsDiv.className = "flex items-center space-x-2";
