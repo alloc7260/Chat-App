@@ -267,3 +267,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   showLogin(); // Show login section by default
 });
+
+function hideScrollbar(element) {
+  element.style.msOverflowStyle = 'none'; // IE and Edge
+  element.style.scrollbarWidth = 'none'; // Firefox
+  element.style.setProperty('--webkit-scrollbar', 'none'); // Webkit browsers
+}
+
+const element = document.querySelector('.scrollbar-hide');
+if (element) {
+  hideScrollbar(element);
+}
