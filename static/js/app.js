@@ -158,6 +158,16 @@ function logout() {
     });
 }
 
+function showRegister() {
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("register-section").style.display = "block";
+}
+
+function showLogin() {
+  document.getElementById("register-section").style.display = "none";
+  document.getElementById("login-section").style.display = "block";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.pathname === "/dashboard") { // Check if on the dashboard page
     fetch("/chat", {
@@ -220,4 +230,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("send-svg").setAttribute("fill", "#000000");
     document.getElementById("dark-mode-toggle").innerHTML = moon_svg;
   }
+  showLogin(); // Show login section by default
 });

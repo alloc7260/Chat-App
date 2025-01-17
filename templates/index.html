@@ -17,25 +17,34 @@
     </div>
     <h1 class="text-3xl font-bold mb-6 text-center text-black dark:text-white">Chat App</h1>
     <div id="auth">
-      <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Register</h2>
-      <input type="text" id="register-username" placeholder="Username"
-        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
-      <input type="password" id="register-password" placeholder="Password"
-        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white"
-        onkeydown="if(event.key === 'Enter') register()" />
-      <button onclick="register()" class="w-full bg-blue-500 dark:bg-blue-700 text-white p-2 rounded mb-4">
-        Register
-      </button>
-
-      <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Login</h2>
-      <input type="text" id="login-username" placeholder="Username"
-        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
-      <input type="password" id="login-password" placeholder="Password"
-        class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white"
-        onkeydown="if(event.key === 'Enter') login()" />
-      <button onclick="login()" class="w-full bg-green-500 dark:bg-green-700 text-white p-2 rounded">
-        Login
-      </button>
+      <div id="register-section" style="display: none;">
+        <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Register</h2>
+        <input type="text" id="register-username" placeholder="Username"
+          class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
+        <input type="password" id="register-password" placeholder="Password"
+          class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white"
+          onkeydown="if(event.key === 'Enter') register()" />
+        <button onclick="register()" class="w-full bg-blue-500 dark:bg-blue-700 text-white p-2 rounded mb-4">
+          Register
+        </button>
+        <button onclick="showLogin()" class="w-full bg-gray-500 dark:bg-gray-700 text-white p-2 rounded">
+          Go to Login
+        </button>
+      </div>
+      <div id="login-section">
+        <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Login</h2>
+        <input type="text" id="login-username" placeholder="Username"
+          class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
+        <input type="password" id="login-password" placeholder="Password"
+          class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white"
+          onkeydown="if(event.key === 'Enter') login()" />
+        <button onclick="login()" class="w-full bg-green-500 dark:bg-green-700 text-white p-2 rounded mb-4">
+          Login
+        </button>
+        <button onclick="showRegister()" class="w-full bg-gray-500 dark:bg-gray-700 text-white p-2 rounded">
+          Go to Register
+        </button>
+      </div>
     </div>
 
     <div id="chat" style="display: none">
