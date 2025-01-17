@@ -17,7 +17,7 @@
     </div>
     <h1 class="text-3xl font-bold mb-6 text-center text-black dark:text-white">Chat App</h1>
     <div id="auth">
-      <div id="register-section" style="display: none;">
+      <div id="register-section" style="display: none">
         <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Register</h2>
         <input type="text" id="register-username" placeholder="Username"
           class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white" />
@@ -56,13 +56,13 @@
         class="h-64 overflow-y-scroll mb-4 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-white dark:bg-gray-700 text-black dark:text-white">
       </div>
       <div class="flex items-center mb-4">
-        <input type="text" id="chat-message" placeholder="Type a message"
-          class="flex-grow p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white" />
-        <button onclick="sendMessage()" class="bg-purple-500 dark:bg-purple-700 text-white p-2 rounded-md text-center text-sm transition-all">
+        <input type="text" id="chat-message" placeholder="Type a message" autofocus
+          class="flex-grow p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white" onkeydown="if(event.key === 'Enter') sendMessage()" />
+        <button onclick="sendMessage()" class="bg-purple-600 text-white p-2 rounded-md text-center text-sm transition-all">
           <?xml version="1.0" encoding="iso-8859-1"?>
           <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-          <svg id="send-svg" fill="#000000" height="1.5rem" width="1.5rem" version="1.1" id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.001 512.001"
+          <svg id="send-svg" fill="#ffffff" height="1.5rem" width="1.5rem" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
             xml:space="preserve">
             <g>
               <g>

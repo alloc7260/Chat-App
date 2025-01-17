@@ -92,6 +92,7 @@ function sendMessage() {
     .then((data) => {
       showToast(data.message, "success");
       document.getElementById("chat-message").value = ""; // Clear the input
+      document.getElementById("chat-message").focus(); // Refocus the input
       getMessages();
     });
 }
@@ -112,10 +113,10 @@ function editMessage(messageId, currentMessage) {
   const messageElement = document.getElementById(`message-${messageId}`);
   messageElement.innerHTML = `
     <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
-    <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-slate-600">
+    <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-purple-600">
       &#x2714;
     </button>
-    <button onclick="getMessages()" class="rounded-md p-2.5 text-center text-sm transition-all text-slate-600">
+    <button onclick="getMessages()" class="rounded-md p-2.5 text-center text-sm transition-all text-purple-600">
       &#x2716;
     </button>
   `;
@@ -241,7 +242,7 @@ let moon_svg = `
 function toggleDarkMode() {
   const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-  document.getElementById("send-svg").setAttribute("fill", isDarkMode ? "#ffffff" : "#000000");
+  document.getElementById("send-svg").setAttribute("fill", isDarkMode ? "#000000" : "#ffffff");
   document.getElementById("dark-mode-toggle").innerHTML = isDarkMode ? sun_svg : moon_svg;
 }
 
@@ -257,11 +258,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (theme === "dark") {
     document.documentElement.classList.add("dark");
-    document.getElementById("send-svg").setAttribute("fill", "#ffffff");
+    document.getElementById("send-svg").setAttribute("fill", "#000000");
     document.getElementById("dark-mode-toggle").innerHTML = sun_svg;
   } else {
     document.documentElement.classList.remove("dark");
-    document.getElementById("send-svg").setAttribute("fill", "#000000");
+    document.getElementById("send-svg").setAttribute("fill", "#ffffff");
     document.getElementById("dark-mode-toggle").innerHTML = moon_svg;
   }
   showLogin(); // Show login section by default
