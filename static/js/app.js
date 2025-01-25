@@ -113,7 +113,7 @@ function deleteMessage(messageId) {
 function editMessage(messageId, currentMessage) {
   const messageElement = document.getElementById(`message-${messageId}`);
   messageElement.innerHTML = `
-    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
+    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full text-sm p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
     <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-purple-600">
       &#x2714;
     </button>
