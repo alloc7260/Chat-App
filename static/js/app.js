@@ -143,7 +143,8 @@ function renderMessages(messages) {
   chatMessages.innerHTML = "";
   messages.forEach((msg) => {
     const div = document.createElement("div");
-    div.className = "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-md flex justify-between items-center";
+    div.className =
+      "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-md flex justify-between items-center";
     div.id = `message-${msg.id}`;
     const iconsDiv = document.createElement("div");
     iconsDiv.className = "flex items-center space-x-2";
@@ -166,7 +167,8 @@ function renderMessages(messages) {
     iconsDiv.appendChild(editIcon);
     iconsDiv.appendChild(deleteIcon);
     const messageText = document.createElement("div");
-    messageText.className = "ml-2 text-sm flex-grow whitespace-pre overflow-x-auto";
+    messageText.className =
+      "ml-2 text-sm flex-grow whitespace-pre overflow-x-auto";
     messageText.textContent = msg.message;
     hideScrollbar(messageText);
     div.appendChild(iconsDiv);
@@ -206,7 +208,8 @@ function showLogin() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  if (window.location.pathname === "/dashboard") { // Check if on the dashboard page
+  if (window.location.pathname === "/dashboard") {
+    // Check if on the dashboard page
     fetch("/chat", {
       method: "GET",
       headers: { "x-access-tokens": token },
@@ -244,8 +247,12 @@ let moon_svg = `
 function toggleDarkMode() {
   const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-  document.getElementById("send-svg").setAttribute("fill", isDarkMode ? "#000000" : "#ffffff");
-  document.getElementById("dark-mode-toggle").innerHTML = isDarkMode ? sun_svg : moon_svg;
+  document
+    .getElementById("send-svg")
+    .setAttribute("fill", isDarkMode ? "#000000" : "#ffffff");
+  document.getElementById("dark-mode-toggle").innerHTML = isDarkMode
+    ? sun_svg
+    : moon_svg;
 }
 
 tailwind.config = {
@@ -271,9 +278,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function hideScrollbar(element) {
-  element.style.msOverflowStyle = 'none'; // IE and Edge
-  element.style.scrollbarWidth = 'none'; // Firefox
-  element.style.setProperty('--webkit-scrollbar', 'none'); // Webkit browsers
+  element.style.msOverflowStyle = "none"; // IE and Edge
+  element.style.scrollbarWidth = "none"; // Firefox
+  element.style.setProperty("--webkit-scrollbar", "none"); // Webkit browsers
 }
 
-hideScrollbar(document.querySelector('.scrollbar-hide'));
+hideScrollbar(document.querySelector(".scrollbar-hide"));
