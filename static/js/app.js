@@ -82,6 +82,7 @@ function login() {
 
 function sendMessage() {
   const message = document.getElementById("chat-message").value;
+  if (message.trim() === "") return;
 
   fetch("/chat", {
     method: "POST",
@@ -165,8 +166,9 @@ function renderMessages(messages) {
     iconsDiv.appendChild(editIcon);
     iconsDiv.appendChild(deleteIcon);
     const messageText = document.createElement("div");
-    messageText.className = "text-right flex-grow";
+    messageText.className = "ml-2 text-sm flex-grow whitespace-pre overflow-x-auto";
     messageText.textContent = msg.message;
+    hideScrollbar(messageText);
     div.appendChild(iconsDiv);
     div.appendChild(messageText);
     chatMessages.appendChild(div);
@@ -274,7 +276,4 @@ function hideScrollbar(element) {
   element.style.setProperty('--webkit-scrollbar', 'none'); // Webkit browsers
 }
 
-const element = document.querySelector('.scrollbar-hide');
-if (element) {
-  hideScrollbar(element);
-}
+hideScrollbar(document.querySelector('.scrollbar-hide'));
