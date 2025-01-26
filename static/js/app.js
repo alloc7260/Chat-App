@@ -80,9 +80,19 @@ function login() {
     });
 }
 
+document
+  .getElementById("chat-message")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+
 function sendMessage() {
-  const message = document.getElementById("chat-message").value;
+  let message = document.getElementById("chat-message").innerText;
   if (message.trim() === "") return;
+  message = message.replace(/\n\n/g, "\n");
 
   fetch("/chat", {
     method: "POST",
@@ -92,7 +102,7 @@ function sendMessage() {
     .then((response) => response.json())
     .then((data) => {
       showToast(data.message, "success");
-      document.getElementById("chat-message").value = ""; // Clear the input
+      document.getElementById("chat-message").innerText = ""; // Clear the input
       document.getElementById("chat-message").focus(); // Refocus the input
       getMessages();
     });
@@ -170,7 +180,7 @@ function renderMessages(messages) {
     messageText.className =
       "ml-2 text-sm flex-grow whitespace-pre overflow-x-auto";
     messageText.textContent = msg.message;
-    hideScrollbar(messageText);
+    hideScrollbar([messageText]);
     div.appendChild(iconsDiv);
     div.appendChild(messageText);
     chatMessages.appendChild(div);
@@ -277,10 +287,13 @@ document.addEventListener("DOMContentLoaded", () => {
   showLogin(); // Show login section by default
 });
 
-function hideScrollbar(element) {
-  element.style.msOverflowStyle = "none"; // IE and Edge
-  element.style.scrollbarWidth = "none"; // Firefox
-  element.style.setProperty("--webkit-scrollbar", "none"); // Webkit browsers
+function hideScrollbar(elements) {
+  elements = Array.isArray(elements) ? elements : Array.from(elements);
+  elements.forEach((element) => {
+    element.style.msOverflowStyle = "none"; // IE and Edge
+    element.style.scrollbarWidth = "none"; // Firefox
+    element.style.setProperty("--webkit-scrollbar", "none"); // Webkit browsers
+  });
 }
 
-hideScrollbar(document.querySelector(".scrollbar-hide"));
+hideScrollbar(document.querySelectorAll(".scrollbar-hide"));
