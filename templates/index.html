@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center h-screen">
-  <div class="container bg-white dark:bg-gray-800 p-8 rounded-md shadow-lg w-full max-w-3xl">
+  <div class="container bg-white dark:bg-gray-800 p-6 rounded-md shadow-lg w-full max-w-3xl">
     <div class="flex justify-between mb-2">
       <button onclick="toggleDarkMode()" class="size-10 bg-gray-200 dark:bg-gray-600 text-black dark:text-white p-2 rounded">
         <span id="dark-mode-toggle"></span>
@@ -20,7 +20,7 @@
         </svg>
       </button>
     </div>
-    <h1 class="text-3xl font-bold mb-4 text-center text-black dark:text-white">Chat App</h1>
+    <h1 class="text-3xl font-bold mb-2 text-center text-black dark:text-white">Chat App</h1>
     <div id="auth">
       <div id="register-section" style="display: none">
         <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Register</h2>
@@ -60,11 +60,11 @@
 
     <div id="chat" style="display: none">
       <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Chats</h2>
-          <span id="current-username" class="text-xl font-semibold mb-4 text-black dark:text-white"></span>
+        <h2 class="text-2xl font-semibold mb-2 text-black dark:text-white">Chats</h2>
+          <span id="current-username" class="text-xl font-semibold mb-2 text-black dark:text-white"></span>
       </div>
       <div id="chat-messages"
-        class="h-[50vh] overflow-y-scroll mb-4 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white scrollbar-hide">
+        class="h-[60vh] overflow-y-scroll mb-2 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white scrollbar-hide">
       </div>
       <div class="flex items-center">
         <div id="chat-message" placeholder="Type a message" autofocus
