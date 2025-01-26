@@ -123,7 +123,7 @@ function deleteMessage(messageId) {
 function editMessage(messageId, currentMessage) {
   const messageElement = document.getElementById(`message-${messageId}`);
   messageElement.innerHTML = `
-    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full text-sm p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white" />
+    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full text-sm p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" />
     <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-purple-600">
       &#x2714;
     </button>
@@ -154,7 +154,7 @@ function renderMessages(messages) {
   messages.forEach((msg) => {
     const div = document.createElement("div");
     div.className =
-      "p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-md flex justify-between items-center";
+      "p-2 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md flex justify-between items-center";
     div.id = `message-${msg.id}`;
     const iconsDiv = document.createElement("div");
     iconsDiv.className = "flex items-center space-x-2";
