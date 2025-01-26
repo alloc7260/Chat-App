@@ -11,7 +11,7 @@ function showToast(message, type = "info") {
       ? "bg-red-500"
       : "bg-blue-500"
   }`;
-  toast.textContent = message;
+  toast.innerText = message;
   toastContainer.appendChild(toast);
 
   setTimeout(() => {
@@ -123,7 +123,7 @@ function deleteMessage(messageId) {
 function editMessage(messageId, currentMessage) {
   const messageElement = document.getElementById(`message-${messageId}`);
   messageElement.innerHTML = `
-    <input type="text" id="edit-message-${messageId}" value="${currentMessage}" class="w-full text-sm p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" />
+    <div id="edit-message-${messageId}" class="w-full text-sm p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white whitespace-pre overflow-x-auto scrollbar-hide" contenteditable="true" role="textbox" autofocus ></div>
     <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-purple-600">
       &#x2714;
     </button>
@@ -131,10 +131,27 @@ function editMessage(messageId, currentMessage) {
       &#x2716;
     </button>
   `;
+
+  const editMessageElement = document.getElementById(
+    `edit-message-${messageId}`
+  );
+  editMessageElement.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      saveMessage(messageId);
+    }
+  });
+  editMessageElement.focus();
+  editMessageElement.innerText = currentMessage;
+  hideScrollbar([editMessageElement]);
 }
 
 function saveMessage(messageId) {
-  const newMessage = document.getElementById(`edit-message-${messageId}`).value;
+  let newMessage = document.getElementById(
+    `edit-message-${messageId}`
+  ).innerText;
+  if (newMessage.trim() === "") return;
+  newMessage = newMessage.replace(/\n\n/g, "\n");
 
   fetch(`/chat/${messageId}`, {
     method: "PUT",
@@ -179,7 +196,7 @@ function renderMessages(messages) {
     const messageText = document.createElement("div");
     messageText.className =
       "ml-2 text-sm flex-grow whitespace-pre overflow-x-auto";
-    messageText.textContent = msg.message;
+    messageText.innerText = msg.message;
     hideScrollbar([messageText]);
     div.appendChild(iconsDiv);
     div.appendChild(messageText);
@@ -234,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       })
       .then((data) => {
-        document.getElementById("current-username").textContent = data.username;
+        document.getElementById("current-username").innerText = data.username;
         renderMessages(data.messages);
       })
       .catch((error) => {
