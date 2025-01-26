@@ -227,11 +227,13 @@ function logout() {
 function showRegister() {
   document.getElementById("login-section").style.display = "none";
   document.getElementById("register-section").style.display = "block";
+  document.getElementById("logout-button").style.display = "none";
 }
 
 function showLogin() {
   document.getElementById("register-section").style.display = "none";
   document.getElementById("login-section").style.display = "block";
+  document.getElementById("logout-button").style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -245,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.status === 200) {
           document.getElementById("auth").style.display = "none";
           document.getElementById("chat").style.display = "block";
+          document.getElementById("logout-button").style.display = "block";
           return response.json();
         } else {
           throw new Error("Not authenticated");
