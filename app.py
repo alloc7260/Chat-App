@@ -58,7 +58,7 @@ def login():
         app.config["SECRET_KEY"],
     )
     resp = make_response(jsonify({"message": "Login successful!"}))
-    resp.set_cookie("token", token, httponly=True)
+    resp.set_cookie("token", token, httponly=True, secure=True)
     return resp
 
 
@@ -66,7 +66,7 @@ def login():
 @token_required
 def logout(current_user):
     resp = make_response(jsonify({"message": "Logged out!"}))
-    resp.set_cookie("token", "", expires=0)
+    resp.set_cookie("token", "", expires=0, httponly=True, secure=True)
     return resp
 
 
@@ -110,7 +110,7 @@ def update_message(current_user, message_id):
     data = request.get_json()
     result = todos_collection.update_one(
         {"_id": ObjectId(message_id), "user_id": current_user["_id"]},
-        {"$set": {"message": data["message"]}}
+        {"$set": {"message": data["message"]}},
     )
     if result.matched_count == 1:
         return jsonify({"message": "Message updated!"}), 200
@@ -137,4 +137,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
