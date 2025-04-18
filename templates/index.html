@@ -10,18 +10,18 @@
 </head>
 
 <body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center h-screen">
-  <div class="container bg-white dark:bg-gray-800 p-6 rounded-md shadow-lg w-full max-w-3xl">
-    <div class="flex justify-between mb-2">
+  <div class="container bg-white dark:bg-gray-800 p-4 rounded-md shadow-lg w-full max-w-3xl">
+    <div class="flex items-center justify-between mb-2">
       <button onclick="toggleDarkMode()" class="size-10 bg-gray-200 dark:bg-gray-600 text-black dark:text-white p-2 rounded">
         <span id="dark-mode-toggle"></span>
       </button>
-      <button id="logout-button" onclick="logout()" class="size-10 bg-red-500 dark:bg-red-700 text-white p-2 rounded" style="display: none;">
+      <h1 class="text-3xl font-bold text-black dark:text-white">Chat App</h1>
+      <button id="logout-button" onclick="logout()" class="size-10 bg-red-500 dark:bg-red-700 text-white p-2 rounded" style="visibility: hidden;">
         <svg fill="#ffffff" height="22" width="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 13v-2H7V8l-5 4 5 4v-3h9zM20 3H4c-1.1 0-2 .9-2 2v4h2V5h16v14H4v-4H2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
         </svg>
       </button>
     </div>
-    <h1 class="text-3xl font-bold mb-2 text-center text-black dark:text-white">Chat App</h1>
     <div id="auth">
       <div id="register-section" style="display: none">
         <h2 class="text-2xl font-semibold mb-4 text-black dark:text-white">Register</h2>
@@ -65,7 +65,7 @@
         <span id="current-username" class="text-xl font-semibold mb-2 text-black dark:text-white"></span>
       </div>
       <div id="chat-messages"
-        class="h-[60vh] overflow-auto mb-2 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white">
+        class="h-[75vh] overflow-auto mb-2 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white">
       </div>
       <div class="flex items-center">
         <div id="chat-message" placeholder="Type a message" autofocus
