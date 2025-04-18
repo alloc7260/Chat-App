@@ -37,6 +37,8 @@ def register():
     data = request.get_json()
     if not data or not data.get("username") or not data.get("password"):
         return jsonify({"message": "Invalid data!"}), 400
+    if users_collection.find_one({"username": data["username"]}):
+        return jsonify({"message": "Username already exists!"}), 409
     hashed_password = generate_password_hash(data["password"], method="sha256")
     users_collection.insert_one(
         {"username": data["username"], "password": hashed_password}
