@@ -194,7 +194,7 @@ function renderMessages(messages) {
     iconsDiv.appendChild(deleteIcon);
     const messageText = document.createElement("div");
     messageText.className =
-      "ml-2 text-sm flex-grow whitespace-pre overflow-auto";
+      "ml-2 text-sm flex-grow whitespace-pre overflow-auto max-h-32";
     messageText.innerText = msg.message;
     div.appendChild(iconsDiv);
     div.appendChild(messageText);
