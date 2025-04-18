@@ -123,7 +123,7 @@ function deleteMessage(messageId) {
 function editMessage(messageId, currentMessage) {
   const messageElement = document.getElementById(`message-${messageId}`);
   messageElement.innerHTML = `
-    <div id="edit-message-${messageId}" class="w-full text-sm p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white whitespace-pre overflow-x-auto scrollbar-hide" contenteditable="true" role="textbox" autofocus ></div>
+    <div id="edit-message-${messageId}" class="w-full text-sm p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white whitespace-pre overflow-auto" contenteditable="true" role="textbox" autofocus ></div>
     <button onclick="saveMessage('${messageId}')" class="rounded-md p-2.5 text-center text-sm transition-all text-purple-600">
       &#x2714;
     </button>
@@ -143,7 +143,6 @@ function editMessage(messageId, currentMessage) {
   });
   editMessageElement.focus();
   editMessageElement.innerText = currentMessage;
-  hideScrollbar([editMessageElement]);
 }
 
 function saveMessage(messageId) {
@@ -195,9 +194,8 @@ function renderMessages(messages) {
     iconsDiv.appendChild(deleteIcon);
     const messageText = document.createElement("div");
     messageText.className =
-      "ml-2 text-sm flex-grow whitespace-pre overflow-x-auto";
+      "ml-2 text-sm flex-grow whitespace-pre overflow-auto";
     messageText.innerText = msg.message;
-    hideScrollbar([messageText]);
     div.appendChild(iconsDiv);
     div.appendChild(messageText);
     chatMessages.appendChild(div);
@@ -307,13 +305,3 @@ document.addEventListener("DOMContentLoaded", () => {
   showLogin(); // Show login section by default
 });
 
-function hideScrollbar(elements) {
-  elements = Array.isArray(elements) ? elements : Array.from(elements);
-  elements.forEach((element) => {
-    element.style.msOverflowStyle = "none"; // IE and Edge
-    element.style.scrollbarWidth = "none"; // Firefox
-    element.style.setProperty("--webkit-scrollbar", "none"); // Webkit browsers
-  });
-}
-
-hideScrollbar(document.querySelectorAll(".scrollbar-hide"));

@@ -61,15 +61,15 @@
     <div id="chat" style="display: none">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-semibold mb-2 text-black dark:text-white">Chats</h2>
-          <span id="current-username" class="text-xl font-semibold mb-2 text-black dark:text-white"></span>
+        <span id="current-username" class="text-xl font-semibold mb-2 text-black dark:text-white"></span>
       </div>
       <div id="chat-messages"
-        class="h-[60vh] overflow-y-scroll mb-2 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white scrollbar-hide">
+        class="h-[60vh] overflow-auto mb-2 p-2 border border-gray-300 dark:border-gray-600 rounded space-y-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white">
       </div>
       <div class="flex items-center">
         <div id="chat-message" placeholder="Type a message" autofocus
-        class="flex-grow text-sm p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-200 dark:bg-gray-700 text-black dark:text-white mr-2 whitespace-pre overflow-x-auto scrollbar-hide"
-        contenteditable="true" role="textbox"></div>
+          class="flex-grow text-sm p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-200 dark:bg-gray-700 text-black dark:text-white mr-2 whitespace-pre overflow-auto"
+          contenteditable="true" role="textbox"></div>
         <button onclick="sendMessage()"
           class="bg-purple-600 text-white p-2 rounded-md text-center text-sm transition-all">
           <?xml version="1.0" encoding="iso-8859-1"?>
